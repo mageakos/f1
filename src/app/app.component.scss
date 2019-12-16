@@ -1,0 +1,49 @@
+.background-gray {
+  background: #f9f9f9;
+}
+
+.label-btn {
+  background: white;
+}
+
+.avatar-cell,
+.avatar-cell img {
+  max-height: 20px;
+  max-width: 20px;
+  object-fit: cover;
+}
+
+span.button-cell button {
+  height: 22px;
+  width: 22px;
+  padding: 0;
+  margin-right: 5px;
+  font-size: larger;
+}
+
+.ag-theme-balham .ag-ltr .ag-row-focus .ag-cell {
+  background: #6c85ff;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 100%;
+}
+
+#main {
+  overflow: auto;
+  padding-bottom: 150px;
+  margin-bottom: 50px;
+}
+
+.footer {
+  position: fixed;
+  margin-top: -150px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}

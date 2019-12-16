@@ -1,0 +1,18 @@
+.my-table {
+    border:.5px solid gray;
+    border-radius: 5px;
+}
+
+.my-table th{
+    border-bottom: .5px solid gray;
+}
+
+.my-table th,
+.my-table td {
+  padding: 3px 7.5px;
+  cursor: pointer;
+}
+
+.my-table .selected {
+  background: lightpink;
+}
