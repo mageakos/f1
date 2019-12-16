@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { IButtonGroup } from '../../classes/models';
 
 @Component({
   selector: 'app-button-group',
@@ -6,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./button-group.component.scss']
 })
 export class ButtonGroupComponent implements OnInit {
-  @Input() options: any[];
+  @Input() options: IButtonGroup;
 
   constructor() {}
 

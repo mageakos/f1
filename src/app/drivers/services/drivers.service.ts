@@ -1,26 +1,27 @@
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { Driver, IEntityService } from "src/app/core/classes/models";
-import { environment } from "src/environments/environment";
-import { RequestService } from "src/app/core/services/request.service";
-import { map } from "rxjs/operators";
+import { DriverResponse } from './../classes/models';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { IEntityService } from 'src/app/core/classes/models';
+import { environment } from 'src/environments/environment';
+import { RequestService } from 'src/app/core/services/request/request.service';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class DriversService implements IEntityService<Driver> {
+export class DriversService implements IEntityService<DriverResponse> {
   constructor(private httpService: RequestService) {}
 
-  get(): Observable<Driver> {
-    let url = environment.APIUrl + "drivers";
+  get(): Observable<DriverResponse> {
+    const url = environment.APIUrl + 'drivers';
     return this.httpService
-      .get<Driver>(url);
+      .get<DriverResponse>(url);
       // .pipe(map(res => res.DriverTable.Drivers));
   }
 
   getAll(): Observable<any> {
-    let url = environment.APIUrl + "f1/drivers.json";
-    return this.httpService.get<any>(url).pipe(
+    const url = environment.APIUrl + 'f1/drivers.json';
+    return this.httpService.get<DriverResponse>(url).pipe(
       map(res => {
         return res.DriverTable.Drivers;
       })

@@ -1,1 +1,41 @@
-<p>details works!</p>
+<div class="row" *ngIf="entityData">
+  <div class="col-sm-4">
+    <div class="card p-2">
+      <img class="my-avatar" alt="Avatar" src="{{ entityData.avatar }}" />
+      <form #entiy="ngForm">
+        <div class="container my-2">
+          <app-label
+            [label]="'name'"
+            [mode]="mode"
+            [(data)]="entityData.name"
+            (dataUpdated)="dataChanged($event)"
+            [format]="'title'"
+          ></app-label>
+          <app-label
+            [label]="'country'"
+            [mode]="mode"
+            [data]="entityData.country"
+            (dataUpdated)="dataChanged($event)"
+            [format]="'title'"
+          ></app-label>
+          <app-label
+            [label]="'birthday'"
+            [mode]="mode"
+            [data]="entityData.birthday"
+            (dataUpdated)="dataChanged($event)"
+            [format]="'text'"
+          ></app-label>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <!-- <app-history> </app-history> -->
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 float-right">
+    <app-button-group *ngIf="actions"></app-button-group>
+  </div>
+</div>

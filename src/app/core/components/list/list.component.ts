@@ -1,29 +1,41 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { GridService } from './../../services/grid/grid.service';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { IButtonGroup } from '../../classes/models';
 
 @Component({
-  selector: "app-list",
-  templateUrl: "./list.component.html",
-  styleUrls: ["./list.component.scss"]
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
-  @Input() entity: string = "entity";
-  @Input() list: any[] = [];
-  @Input() actionOptions: any[] = [];
-  public selected: string = "";
+export class ListComponent implements OnInit, OnChanges {
+  @Input() title = 'List';
+  @Input() data: any[] = [];
+  @Input() columns: any[];
+  @Input() actions: IButtonGroup;
+  @Input() sortable: boolean;
+  public selected = '';
 
-  constructor() {}
+  constructor(private gridService: GridService) {}
 
-  ngOnInit() {
-    this.list = [
-      { id: 1, name: "geo" },
-      { id: 2, name: "naya" }
-    ];
+  ngOnInit() {}
+
+  ngOnChanges(data) {
+    console.log(data);
   }
 
+  // ngFor track by fn
   trackFn(index, item) {
     return (item && item.driverId) || index;
   }
 
+  sort(col) {
+    this.data = this.data.sort((a, b) => {
+      return (a[col.name] < b[col.name] ? 1 : -1) * (col.lastSorted || -1);
+    });
+    col.lastSorted = col.lastSorted * -1 || 1;
+  }
+
+  // row clicked
   rowClicked(item) {
     console.log(item);
     this.selected = item.driverId;

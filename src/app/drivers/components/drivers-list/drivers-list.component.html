@@ -1,5 +1,12 @@
 <div class="row">
   <div class="col-12">
-    <app-list [entity]="'Drivers'" [list]="drivers"> </app-list>
+    <app-list
+      [title]="'Drivers'"
+      [actions]="driverActions"
+      [data]="data"
+      [sortable]="false"
+      [columns]="columns"
+    >
+    </app-list>
   </div>
 </div>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { MRRepsonse } from 'src/app/drivers/classes/models';
 
 @Injectable({
   providedIn: 'root'
@@ -16,32 +17,19 @@ export class RequestService {
     );
   }
 
-  // post<T>(url: string, data: any): Observable<T> {
-  //   return this.http.post<T>(url, data).pipe(
-  //     map(res => this.mapRes(res)),
-  //     catchError(err => this.errorHandler(err))
-  //   );
-  // }
-
-  // put(url: string, data: any): Observable<any> {
-  //   return this.http.put<any>(url, data).pipe(
-  //     map(res => this.mapRes(res)),
-  //     catchError(err => this.errorHandler(err))
-  //   );
-  // }
-
-  // delete(url: string): Observable<any> {
-  //   return this.http.delete<any>(url).pipe(
-  //     map(res => this.mapRes(res)),
-  //     catchError(err => this.errorHandler(err))
-  //   );
-  // }
-
   mapRes(res: any) {
+    if (!res) {
+      throw Error('no response');
+    }
     if (res && res.status === 'error') {
       throw Error(res.error);
     }
-    return res.MRData;
+    // api data
+    if (res instanceof MRRepsonse || res.hasOwnProperty('MRData')) {
+      return res.MRData;
+    }
+    // other / local data
+    return res;
   }
 
   errorHandler(error: HttpErrorResponse) {

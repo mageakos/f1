@@ -1,0 +1,30 @@
+{
+  "columns": [
+    {
+      "name": "driverId",
+      "column": "DriverId",
+      "hidden": true
+    },
+    {
+      "name": "givenName",
+      "column": "Name"
+    },
+    {
+      "name": "familyName",
+      "column": "Last Name"
+    },
+    {
+      "name": "dateOfBirth",
+      "column": "Birthdate"
+    },
+    {
+      "name": "nationality",
+      "column": "Nationality"
+    },
+    {
+      "name": "url",
+      "column": "url",
+      "hidden": true
+    }
+  ]
+}
