@@ -29,10 +29,15 @@ export class ListComponent implements OnInit, OnChanges {
   }
 
   sort(col) {
-    this.data = this.data.sort((a, b) => {
-      return (a[col.name] < b[col.name] ? 1 : -1) * (col.lastSorted || -1);
-    });
     col.lastSorted = col.lastSorted * -1 || 1;
+    this.data = this.data.sort((a, b) => {
+      return (a[col.name] < b[col.name] ? 1 : -1) * (col.lastSorted);
+    });
+    this.columns.forEach(c => {
+      if (col !== c) { c.lastSorted = null; }
+    });
+
+    console.warn(col.lastSorted);
   }
 
   // row clicked

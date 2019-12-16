@@ -12,7 +12,16 @@
           (click)="sort(col)"
         >
           {{ col.column | titlecase }}
-          <span><i ngClass="{col.lastSorted === 1 ? fa-chevron-up : fa-chevron-down }}"></i></span>
+          <span
+            ><i
+              *ngIf="col.lastSorted"
+              class="fa"
+              [ngClass]="{
+                'fa-angle-up': col.lastSorted === 1,
+                'fa-angle-down': col.lastSorted === -1
+              }"
+            ></i
+          ></span>
         </th>
       </tr>
       <tr
