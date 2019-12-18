@@ -1,12 +1,19 @@
 <div class="row">
   <div class="col-12">
     <app-list
+      *ngIf="data && data.length > 0"
       [title]="'Drivers'"
       [actions]="driverActions"
       [data]="data"
       [sortable]="false"
       [columns]="columns"
+      (rowDbClick)="viewDriver($event)"
     >
     </app-list>
+    <div class="d-flex">
+      <div *ngIf="loading" class="spinner-border m-auto" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
   </div>
 </div>

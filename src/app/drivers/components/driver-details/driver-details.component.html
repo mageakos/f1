@@ -1,0 +1,31 @@
+
+<div class="row">
+  <div class="col-sm-4">
+    {{driverId}}
+    <app-details [entityData]="driverDetails" [mode]="'view'">
+
+    </app-details>
+  </div>
+  <div class="col-sm-8">
+    list
+    <app-list
+      *ngIf="listOptions.isReady()"
+      [title]="listOptions.title"
+      [actions]="listOptions.actions"
+      [data]="listOptions.data"
+      [sortable]="true"
+      [columns]="listOptions.columns"
+      (rowDbClick)="listOptions.onDblClick($event)"
+    >
+    </app-list>
+    <div class="d-flex">
+      <div
+        *ngIf="listOptions.isLoading"
+        class="spinner-border m-auto"
+        role="status"
+      >
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -28,6 +28,7 @@
         *ngFor="let item of data; let i = index; trackBy: trackFn"
         [ngClass]="{ selected: item.driverId == selected }"
         (click)="rowClicked(item)"
+        (dblclick)="rowDbClicked(item)"
       >
         <td
           *ngFor="let col of columns; let i = index; trackBy: trackFn"

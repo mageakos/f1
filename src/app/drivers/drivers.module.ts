@@ -4,6 +4,7 @@ import { DriversListComponent } from './components/drivers-list/drivers-list.com
 import { CoreModule } from '../core/core.module';
 import { DriversRoutingModule } from './drivers-routing.module';
 import { DriversService } from './services/drivers.service';
+import { DriverDetailsComponent } from './components/driver-details/driver-details.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { DriversService } from './services/drivers.service';
     DriversRoutingModule
   ],
   declarations: [
-    DriversListComponent
+    DriversListComponent,
+    DriverDetailsComponent
   ],
   providers: [DriversService]
 })

@@ -1,3 +1,4 @@
+import { DriverDetailsComponent } from './components/driver-details/driver-details.component';
 import { DetailsComponent } from './../core/components/details/details.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -12,6 +13,10 @@ const routes: Routes = [
   {
     path: 'drivers',
     component: DriversListComponent
+  },
+  {
+    path: 'driver/:id',
+    component: DriverDetailsComponent
   },
   {
     path: 'drivers/add',

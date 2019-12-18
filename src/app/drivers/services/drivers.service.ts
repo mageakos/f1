@@ -14,9 +14,16 @@ export class DriversService implements IEntityService<DriverResponse> {
 
   get(): Observable<DriverResponse> {
     const url = environment.APIUrl + 'drivers';
-    return this.httpService
-      .get<DriverResponse>(url);
-      // .pipe(map(res => res.DriverTable.Drivers));
+    return this.httpService.get<DriverResponse>(url);
+  }
+
+  getById(id): Observable<any> {
+    const url = environment.APIUrl + 'f1/drivers/' + id + '.json';
+    return this.httpService.get<DriverResponse>(url).pipe(
+      map(res => {
+        return res.DriverTable.Drivers;
+      })
+    );
   }
 
   getAll(): Observable<any> {

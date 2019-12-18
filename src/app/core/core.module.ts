@@ -1,13 +1,13 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
-import { FormsModule } from "@angular/forms";
-
-import { ButtonGroupComponent } from "./widgets/button-group/button-group.component";
-import { LabelComponent } from "./widgets/label/label.component";
-
-import { ListComponent } from "./components/list/list.component";
-import { DetailsComponent } from "./components/details/details.component";
+import {
+  CommonModule,
+  HttpClientModule,
+  FormsModule,
+  ButtonGroupComponent,
+  LabelComponent,
+  ListComponent,
+  DetailsComponent,
+  NgModule
+} from './index';
 
 @NgModule({
   imports: [CommonModule, FormsModule, HttpClientModule],
@@ -17,14 +17,14 @@ import { DetailsComponent } from "./components/details/details.component";
     FormsModule,
     ButtonGroupComponent,
     LabelComponent,
-    ListComponent
+    ListComponent,
+    DetailsComponent
   ],
   declarations: [
     ButtonGroupComponent,
     LabelComponent,
     ListComponent,
     DetailsComponent
-  ],
-
+  ]
 })
 export class CoreModule {}

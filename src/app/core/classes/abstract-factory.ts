@@ -1,5 +1,10 @@
-export let metaMap = new Map<string, string>([]);
-metaMap.set('Drivers', 'assets/meta/driver-meta.json');
-
 // AbstractFactoryProvider as a HashMap
-export let servicesMap = new Map([]);
+
+// export let metaMap = new Map<string, string>([]);
+// // metaMap.set('Entity', 'path to metaData');
+
+// export let servicesMap = new Map([]);
+
+// servicesMap.set('Entity', EntityService);
+
+// todo: need this?

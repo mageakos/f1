@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { RequestService } from '../request/request.service';
 
 @Injectable({
@@ -24,6 +24,9 @@ export class GridService {
           }
         });
         return res;
+      }),
+      catchError(() => {
+        return [];
       })
     );
   }

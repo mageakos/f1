@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 export interface IEntityService<T> {
   get(): Observable<T>;
   getAll(): Observable<any>;
+  getById(id): Observable<any>;
 }
 
 export interface IButtonGroup {
@@ -25,9 +26,3 @@ export class Button implements IButton {
     console.warn('Method not implemented');
   }
 }
-
-// export class EntityService<Driver> implements IEntityService {
-//   get(): Observable<Driver> {
-//     return null;
-//   }
-// }
