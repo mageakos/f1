@@ -1,31 +1,25 @@
-
-<div class="row">
-  <div class="col-sm-4">
-    {{driverId}}
-    <app-details [entityData]="driverDetails" [mode]="'view'">
-
-    </app-details>
-  </div>
-  <div class="col-sm-8">
-    list
-    <app-list
-      *ngIf="listOptions.isReady()"
-      [title]="listOptions.title"
-      [actions]="listOptions.actions"
-      [data]="listOptions.data"
-      [sortable]="true"
-      [columns]="listOptions.columns"
-      (rowDbClick)="listOptions.onDblClick($event)"
-    >
-    </app-list>
-    <div class="d-flex">
-      <div
-        *ngIf="listOptions.isLoading"
-        class="spinner-border m-auto"
-        role="status"
+<div *ngIf="!isLoading && driverDetails">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>{{ driverDetails && driverDetails.givenName }}</h1>
+      <app-details [entityData]="driverDetails" [mode]="'view'"> </app-details>
+    </div>
+    <div class="col-sm-8">
+      <app-list
+        *ngIf="listOptions.isReady"
+        [title]="listOptions.title"
+        [actions]="listOptions.actions"
+        [id]="listOptions.id"
+        [data]="listOptions.data"
+        [sortable]="true"
+        [filterable]="false"
+        [columns]="listOptions.columns"
       >
-        <span class="sr-only">Loading...</span>
-      </div>
+      </app-list>
     </div>
   </div>
+  <div class="row">
+    <app-button-group class="col-sm-12" [options]="buttonOptions"></app-button-group>
+  </div>
 </div>
+<app-loader [loading]="isLoading"></app-loader>

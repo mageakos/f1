@@ -1,11 +1,11 @@
-import { Component, OnInit, SimpleChanges, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, SimpleChanges, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-label',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss']
 })
-export class LabelComponent implements OnInit {
+export class LabelComponent implements OnInit, OnChanges {
   @Input() data = 'title';
   @Input() label: string;
   @Input() format: string;

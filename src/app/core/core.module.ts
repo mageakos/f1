@@ -6,7 +6,8 @@ import {
   LabelComponent,
   ListComponent,
   DetailsComponent,
-  NgModule
+  NgModule,
+  LoaderComponent
 } from './index';
 
 @NgModule({
@@ -18,13 +19,15 @@ import {
     ButtonGroupComponent,
     LabelComponent,
     ListComponent,
-    DetailsComponent
+    DetailsComponent,
+    LoaderComponent
   ],
   declarations: [
     ButtonGroupComponent,
     LabelComponent,
     ListComponent,
-    DetailsComponent
+    DetailsComponent,
+    LoaderComponent
   ]
 })
 export class CoreModule {}

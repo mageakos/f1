@@ -1,6 +1,9 @@
 <div class="row">
   <div class="col-12">
-    <h2 class="pb-2">{{ title | titlecase }}</h2>
+    <h1>{{ title | titlecase }}</h1>
+    <div *ngIf="filterable">
+      <input class="w-100 mb-2" placeholder="Filter..." ([ngModel])="filteredData" (input)="filterChanged($event)"/>
+    </div>
     <div *ngIf="actions" class="mb-2">
       <app-button-group [options]="actions"></app-button-group>
     </div>
@@ -25,8 +28,8 @@
         </th>
       </tr>
       <tr
-        *ngFor="let item of data; let i = index; trackBy: trackFn"
-        [ngClass]="{ selected: item.driverId == selected }"
+        *ngFor="let item of filteredData; let i = index; trackBy: trackFn"
+        [ngClass]="{ selected: item[id] == selected }"
         (click)="rowClicked(item)"
         (dblclick)="rowDbClicked(item)"
       >

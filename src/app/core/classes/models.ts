@@ -22,7 +22,20 @@ export class Button implements IButton {
   text = '';
   icon = '';
   class = '';
-  action = () => {
-    console.warn('Method not implemented');
-  }
+  action = () => {};
+}
+
+export class GridMeta {
+  columns: Column[];
+  id: any;
+}
+
+export class Column {
+  name: string;
+  column: string;
+  type: string;
+  hidden: boolean;
+
+  // define ascend/descending sort by 1/-1
+  lastSorted: number = undefined;
 }

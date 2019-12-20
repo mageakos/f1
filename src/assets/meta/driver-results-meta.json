@@ -1,0 +1,21 @@
+{
+  "id": "Index",
+  "columns": [
+    {
+      "name": "season",
+      "column": "Season"
+    },
+    {
+      "name": "round",
+      "column": "Round"
+    },
+    {
+      "name": "raceName",
+      "column": "Race"
+    },
+    {
+      "name": "date",
+      "column": "Date"
+    }
+  ]
+}

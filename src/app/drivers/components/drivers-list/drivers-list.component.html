@@ -4,8 +4,10 @@
       *ngIf="data && data.length > 0"
       [title]="'Drivers'"
       [actions]="driverActions"
+      [id]="'driverId'"
       [data]="data"
       [sortable]="false"
+      [filterable]="true"
       [columns]="columns"
       (rowDbClick)="viewDriver($event)"
     >

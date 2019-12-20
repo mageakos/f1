@@ -31,7 +31,7 @@ export class ButtonGroupComponent implements OnInit, OnChanges {
     if (typeof value === 'function') {
       return value();
     } else {
-      return value;
+      return value || 'btn-light';
     }
   }
 

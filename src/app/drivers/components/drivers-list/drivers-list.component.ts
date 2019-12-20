@@ -1,3 +1,4 @@
+import { IButtonGroup } from './../../../core/classes/models';
 import { Component, OnInit } from '@angular/core';
 import { DriversService } from '../../services/drivers.service';
 import { ButtonGroup } from 'src/app/core/classes/models';
@@ -12,24 +13,29 @@ import { metaMap } from '../../classes/abstract-factory';
   styleUrls: ['./drivers-list.component.scss']
 })
 export class DriversListComponent implements OnInit {
-  public data: any[];
-  public driverActions: ButtonGroup;
-  public columns: any[];
-  public loading: boolean;
 
   constructor(
     private service: DriversService,
     private gridService: GridService,
     private router: Router
   ) {}
+  public data: any[];
+  public driverActions: ButtonGroup;
+  public columns: any[];
+  public loading: boolean;
+
+  public buttonOptions: ButtonGroup = {
+    buttons: [
+      {}
+    ]
+  };
 
   ngOnInit() {
     // get Meta data on init
     this.initGrid();
 
-    this.initGridActions();
-
     this.loading = true;
+
     this.service
       .getAll()
       .pipe(finalize(() => (this.loading = false)))
@@ -53,20 +59,6 @@ export class DriversListComponent implements OnInit {
           this.columns = (res && res.columns) || [];
         });
     }
-  }
-
-  initGridActions() {
-    this.driverActions = {
-      buttons: [
-        {
-          text: 'add',
-          icon: 'fa fa-plus',
-          action: () => {
-            this.router.navigate(['/drivers/add']);
-          }
-        }
-      ]
-    };
   }
 
   viewDriver(data) {

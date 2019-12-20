@@ -1,8 +1,12 @@
+import { IButton, IButtonGroup, ButtonGroup } from './../../../core/classes/models';
+import { GridService } from './../../../core/services/grid/grid.service';
 import { DriversService } from './../../services/drivers.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, take } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { metaMap } from '../../classes/abstract-factory';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-driver-details',
@@ -12,7 +16,10 @@ import { Observable, Subscription } from 'rxjs';
 export class DriverDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private activeRoute: ActivatedRoute,
-    private service: DriversService
+    private service: DriversService,
+    private gridService: GridService,
+    private location: Location
+
   ) {}
 
   public id: Observable<string>;
@@ -20,28 +27,45 @@ export class DriverDetailsComponent implements OnInit, OnDestroy {
   public driverDetails: any;
 
   //#region driver details
+  // details
   public details = {
     data: {}
   };
-  //#endregion driver details
-  //#region list
+
+  public isLoading = false;
+  // grid
   public listOptions = {
+    id: 'index',
     isLoading: false,
     title: 'Races',
-    data: [],
-    columns: [],
     actions: [],
+    data: [],
+    sortable: true,
+    columns: [],
     onClick: $e => {},
     onDblClick: $e => {},
-    isReady() {
-      return !this.isLoading && this.data && this.data.length > 0;
-    }
+    isReady: false
   };
-  //#endregion list
+  //#endregion driver details
 
   private notFound = false;
 
+  public buttonOptions: ButtonGroup = {
+    buttons: [
+      {
+        text: 'Back',
+        icon: 'fa fa-arrow-left',
+        action: () => {
+          this.location.back();
+        },
+        class: 'mt-2 btn btn-danger'
+      }
+    ]
+  };
+
   ngOnInit() {
+    this.isLoading = true;
+
     // get id from url
     this.activeRoute.paramMap.subscribe(data => {
       this.driverId = data.get('id');
@@ -49,25 +73,45 @@ export class DriverDetailsComponent implements OnInit, OnDestroy {
 
     // if any try get data for this driver id
     if (this.driverId) {
-      this.details.data = this.service
-        .getById(this.driverId)
-        .subscribe(data => {
-          if (data && data.length > 0) {
-            this.driverDetails = data[0];
-          } else {
-            alert('driver not found');
-          }
-        });
-      this.service.getById(this.id).pipe(
-        take(1),
-        map(data => {
-          console.log(data);
-        })
-      );
+      // get driver details
+      this.service.getById(this.driverId).subscribe(data => {
+        if (data && data.length > 0) {
+          this.driverDetails = data[0];
+          // then get driver race results
+          this.service
+            .getDriverRaces(this.driverId)
+            .pipe(
+              finalize(() => {
+                this.isLoading = false;
+              })
+            )
+            .subscribe(res => {
+              this.listOptions.data = res;
+              this.listOptions.isReady = true;
+            });
+        } else {
+          alert('driver not found');
+        }
+      });
+
+      // this.service.getById(this.id).pipe(
+      //   take(1),
+      //   map(data => {
+      //     console.log(data);
+      //   })
+      // );
     } else {
       this.notFound = true;
     }
-    console.log(this.id);
+    this.initGrid();
+  }
+
+  initGrid() {
+    const gridMetaPath: string = metaMap.get('Races');
+    this.gridService.getColumns(gridMetaPath).subscribe(res => {
+      this.listOptions.columns = res.columns;
+      this.listOptions.id = res.id;
+    });
   }
 
   ngOnDestroy(): void {}

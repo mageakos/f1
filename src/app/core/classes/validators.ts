@@ -1,12 +1,12 @@
 // validators class for core widgets and components
 export class Valid {
+  undefined;
   static isObject = obj => {
-    console.warn('validating object');
+    if (obj === undefined) { return true; }
     return typeof obj === 'object' && obj !== null;
   }
 
   static validator = (fn: any, val: string) => {
-    console.warn('validating ');
     if (typeof fn === 'function') {
       if (!fn()) {
         throw Error(val);
@@ -16,5 +16,4 @@ export class Valid {
       throw Error(val);
     }
   }
-
 }
