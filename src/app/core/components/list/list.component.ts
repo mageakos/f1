@@ -1,4 +1,3 @@
-import { Valid } from './../../classes/validators';
 import {
   Component,
   OnInit,
@@ -6,30 +5,32 @@ import {
   OnChanges,
   Output,
   EventEmitter
-} from '@angular/core';
-import { IButtonGroup, Column } from '../../classes/models';
+} from "@angular/core";
+import { IButtonGroup, Column, ButtonGroup } from "../../classes/models";
+
+import { MyLib } from "../../classes/myLib";
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: "app-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.scss"]
 })
 export class ListComponent implements OnInit, OnChanges {
   constructor() {}
-  @Input() id = 'id';
-  @Input() title = 'List';
-  @Input() data: any[];
-  @Input() columns: Column[];
-  @Input() actions: IButtonGroup;
-  @Input() sortable: boolean; // allow sort
-  @Input() filterable: boolean; // allow filtering
-  @Output() rowDbClick = new EventEmitter<any>();
-  @Output() rowClick = new EventEmitter<any>();
+  @Input() id = "id"; // unique identifier for list items
+  @Input() title = "List";
+  @Input() data: any[] = []; // list items
+  @Input() columns: Column[] = []; // columns definitions
+  @Input() actions: ButtonGroup = null; // over the list button actions
+  @Input() sortable: boolean = false; // allow sort
+  @Input() filterable: boolean = false; // allow filtering
+  @Output() rowDbClick = new EventEmitter<any>(); // on row double click
+  @Output() rowClick = new EventEmitter<any>(); // on row click
 
   filteredData = [];
 
-  public selected = '';
-  @Input() filters;
+  public selected = "";
+  @Input() filters: any[];
 
   ngOnInit() {
     this.validate();
@@ -38,100 +39,112 @@ export class ListComponent implements OnInit, OnChanges {
   ngOnChanges(data) {
     this.validate();
 
+    // if (this.data && this.Id)
     if (data && data.data && data.data.currentValue.length > 0) {
-      // set data id
-      this.data = data.data.currentValue;
-      // if there is no given id for the data set
-      if (this.dataHasNoId()) {
-        this.data.forEach((dato, i) => {
-          dato[this.id] = i;
-        });
-      }
+      // todo: check if i need next line
+      // this.data = data.data.currentValue;
+      this.validateAndSetId(this.data, this.id);
       this.filteredData = [...this.data];
     } else {
-      console.log('no data');
+      console.log("no data");
     }
   }
 
-  dataHasNoId() {
-    // check if has data has Id
-    return this.data[0][this.id] === undefined;
+  validateAndSetId(arr: any[], id: string) {
+    // if there is no given id for the data set
+    if (arr[0][id] === undefined) {
+      arr.forEach((dato, i) => {
+        dato[this.id] = i;
+      });
+    }
+    return arr;
   }
 
   // ngFor track by fn
   trackFn(index, item) {
-    // const indy = index;
     return item[this.id];
   }
 
-  filter(filter: string) {
-    if (!this.filterable) {
-      return;
-    }
-    // todo: filter
+  // filter(filter: string) {
+  //   if (!this.filterable) {
+  //     return;
+  //   }
+  //   // todo: filter
+  // }
+
+  filterChanged(filterValue: string) {
+    if (!this.filterable) return;
+
+    let res = this.filterbyVal(this.data, filterValue);
+    this.setFilteredData(res);
   }
 
-  filterChanged($event) {
-    const filterValue = $event.target.value;
-    if (filterValue && filterValue.length > 0) {
-      const res = [];
-      this.data.filter(dato => this.filterBy(dato, filterValue, res));
-      this.setFilterecData(res);
-    } else {
-      // no filter, set initial value
-      this.setFilterecData(this.data);
-    }
+  setFilteredData(data: any[]) {
+    data = data.unique();
+    this.filteredData = data;
+    return data;
   }
 
-  setFilterecData(data: any[]) {
-    data = [new Set(data)];
-    this.filteredData = [...data[0]];
-    return this.filteredData;
+  filterbyVal(data: any[], filterValue: string): any[] {
+    let res = [];
+    res = data.filter(dato => this.filterRowBy(dato, filterValue, res));
+    return res;
   }
 
-  filterBy(dato: any, filterValue: string, res: any[]) {
-    if (this.filters) {
-      console.log('has filters');
-    } else {
+  filterRowBy(dato: any, filterValue: string, res: any[]) {
+    this.columns &&
       this.columns.forEach(col => {
-        const colVal = dato[col.name] && dato[col.name].toString().toLowerCase() || '';
-        if (colVal.indexOf(filterValue) > -1) {
+        // do not filter hidden columns
+        if (col.hidden) return;
+
+        // if there are given filters by column name
+        if (this.filters && !this.filters.contains(col.name)) return;
+
+        const colVal =
+          (dato[col.name] && dato[col.name].toString().toLowerCase()) || "";
+        if (colVal.indexOf(filterValue.toLowerCase()) > -1) {
           res.push(dato);
-          console.log('pushed');
         }
       });
-    }
+
     return res;
   }
 
   // column sort
   sort(col: Column) {
-    if (!this.sortable) {
-      return;
+    if (!this.sortable) return;
+
+    // change column's lastSorted prop to new sorting (or define it first time)
+    col.lastSorted = col.lastSorted * -1 || 1;
+
+    // rest the rest columns' lastSorted prop
+    this.columns &&
+      this.columns.forEach(c => {
+        if (col !== c) {
+          c.lastSorted = null;
+        }
+      });
+
+    // sort data
+    this.filteredData = this.filteredData.sort((a, b) =>
+      this.sortBy(a, b, col)
+    );
+  }
+
+  sortBy(a: any, b: any, col: Column) {
+    let varA = a[col.name];
+    let varB = b[col.name];
+    // check if number
+    const columnIsNumber = typeof col.type === "number";
+    const varIsNumber =
+      MyLib.valid.isNumber(varA) && MyLib.valid.isNumber(varB);
+    // if is number
+    if (columnIsNumber || varIsNumber) {
+      varA = Number(varA);
+      varB = Number(varB);
     }
 
-    col.lastSorted = col.lastSorted * -1 || 1;
-    this.filteredData = this.filteredData.sort((a, b) => {
-      // check if number
-      let varA = a[col.name];
-      let varB = b[col.name];
-
-      const columnIsNumber = typeof col.type === 'number';
-      const isNumber = !isNaN(varA);
-      // if is number
-      if (columnIsNumber || isNumber) {
-        varA = Number(varA);
-        varB = Number(varB);
-      }
-
-      return (varA < varB ? 1 : -1) * col.lastSorted;
-    });
-
-    this.columns.forEach(c => {
-      if (col !== c) {
-        c.lastSorted = null;
-      }
-    });
+    return (varA > varB ? 1 : -1) * col.lastSorted;
   }
 
   // row clicked
@@ -147,14 +160,14 @@ export class ListComponent implements OnInit, OnChanges {
 
   // validate component inputs
   validate() {
-    Valid.validator(
+    MyLib.valid.validate(
       Array.isArray(this.columns),
-      'Columns property is not an Array'
+      "'columns' is not an Array"
     );
-    Valid.validator(Array.isArray(this.data), 'Data is not an Array');
-    Valid.validator(
-      Valid.isObject(this.actions),
-      'Actions are not an instance of ButtonGroup'
+    MyLib.valid.validate(Array.isArray(this.data), "'data' is not an Array");
+    MyLib.valid.validate(
+      MyLib.valid.isObject(this.actions),
+      "'actions' are not an instance of ButtonGroup"
     );
   }
 }

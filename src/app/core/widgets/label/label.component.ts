@@ -1,35 +1,39 @@
-import { Component, OnInit, SimpleChanges, Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  SimpleChanges,
+  Output,
+  EventEmitter,
+  Input,
+  OnChanges
+} from "@angular/core";
+import { MyLib } from "../../classes/myLib";
 
 @Component({
-  selector: 'app-label',
-  templateUrl: './label.component.html',
-  styleUrls: ['./label.component.scss']
+  selector: "app-label",
+  templateUrl: "./label.component.html",
+  styleUrls: ["./label.component.scss"]
 })
 export class LabelComponent implements OnInit, OnChanges {
-  @Input() data = 'title';
+  @Input() data = "title";
   @Input() label: string;
   @Input() format: string;
-  @Input() mode = 'view';
+  @Input() mode = "view"; //default mode is view
+  @Input() id: string;
   @Output() dataUpdated = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit() {
-    // console.log(this.data);
-  }
+  ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.mode && !changes.mode.firstChange) {
-      console.log('onChanges', changes);
-    }
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   modelChanged(eventData) {
-    console.log('sth changed', eventData);
-    this.dataUpdated.emit({
-      prop: this.label,
-      data: eventData
-    });
+    this.dataUpdated.emit(eventData.target.value);
   }
 
+  getId() {
+    this.id = this.id || MyLib.valid.getId();
+    return this.id;
+  }
 }

@@ -1,27 +1,31 @@
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
 
 export interface IEntityService<T> {
   get(): Observable<T>;
   getAll(): Observable<any>;
-  getById(id): Observable<any>;
+  getById(id: string | number): Observable<any>;
 }
 
 export interface IButtonGroup {
   buttons: Button[];
 }
+
 export class ButtonGroup implements IButtonGroup {
   buttons = [];
 }
+
 export interface IButton {
   text: string | any;
   icon: string | any;
   action: any; // function()
   class: string;
 }
+
 export class Button implements IButton {
-  text = '';
-  icon = '';
-  class = '';
+  id: string;
+  text: string;
+  icon: string;
+  class: string;
   action = () => {};
 }
 

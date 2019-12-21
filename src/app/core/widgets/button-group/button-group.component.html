@@ -1,11 +1,7 @@
-<div>
-  <button
-    class="btn mr-1"
-    [ngClass]="GetButtonText(btn.class)"
-    *ngFor="let btn of options.buttons"
-    (click)="btn.action()"
-  >
-    <span *ngIf="btn.icon"><i class="{{ GetButtonText(btn.icon) }}"></i></span>
-    {{ GetButtonText(btn.text) }}
+<div *ngIf="options && options.buttons">
+  <button class="btn mr-1" [ngClass]="getButtonValue(btn.class, 'btn-primary')" *ngFor="let btn of options.buttons"
+    (click)="invokeBtnAction(btn)" [id]="getId(btn)">
+    <span *ngIf="btn.icon"><i class="{{ getButtonValue(btn.icon, '') }}"></i></span>
+    {{ getButtonValue(btn.text, 'button') }}
   </button>
 </div>

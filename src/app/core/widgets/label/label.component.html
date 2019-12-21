@@ -1,15 +1,7 @@
 <div class="mb-4">
-    <label>{{ label | titlecase }}</label>
-    <div class="input-group mb-3">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="{{ label }}"
-        [(name)]="label"
-        [(type)]="format"
-        [(ngModel)]="data"
-        (ngModelChange)="modelChanged($event)"
-      />
-    </div>
+  <label>{{ label | titlecase }}</label>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="{{ label }}" [id]="getId()" [(name)]="label" [(type)]="format"
+      [(ngModel)]="data" (ngModelChange)="modelChanged($event)" />
   </div>
-  
+</div>

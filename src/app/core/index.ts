@@ -9,3 +9,5 @@ export { LoaderComponent } from './widgets/loader/loader.component';
 
 export { ListComponent } from './components/list/list.component';
 export { DetailsComponent } from './components/details/details.component';
+
+export { ArrayExt } from '../core/classes/array.ext';

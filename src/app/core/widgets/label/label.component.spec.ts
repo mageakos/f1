@@ -1,16 +1,17 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { LabelComponent } from './label.component';
+import { LabelComponent } from "./label.component";
+import { FormsModule } from "@angular/forms";
 
-describe('LabelComponent', () => {
+describe("LabelComponent", () => {
   let component: LabelComponent;
   let fixture: ComponentFixture<LabelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LabelComponent ]
-    })
-    .compileComponents();
+      declarations: [LabelComponent],
+      imports: [FormsModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +20,24 @@ describe('LabelComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("#modelChanged should have been called ", () => {
+    spyOn(component, "modelChanged");
+
+    component.label = "label";
+    component.id = "my-label";
+    component.mode = "edit";
+
+    fixture.detectChanges();
+
+    const inputElement: HTMLElement = fixture.nativeElement;
+    const inp = inputElement.querySelector("#my-label");
+
+    inp.dispatchEvent(new Event("ngModelChange"));
+
+    expect(component.modelChanged).toHaveBeenCalled();
   });
 });

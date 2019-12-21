@@ -5,16 +5,9 @@
       <app-details [entityData]="driverDetails" [mode]="'view'"> </app-details>
     </div>
     <div class="col-sm-8">
-      <app-list
-        *ngIf="listOptions.isReady"
-        [title]="listOptions.title"
-        [actions]="listOptions.actions"
-        [id]="listOptions.id"
-        [data]="listOptions.data"
-        [sortable]="true"
-        [filterable]="false"
-        [columns]="listOptions.columns"
-      >
+      <app-list *ngIf="listOptions.isReady && listOptions.data" [title]="listOptions.title"
+        [actions]="listOptions.actions" [id]="listOptions.id" [data]="listOptions.data" [sortable]="true"
+        [filterable]="false" [columns]="listOptions.columns">
       </app-list>
     </div>
   </div>
