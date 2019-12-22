@@ -30,7 +30,7 @@ export class Button implements IButton {
 }
 
 export class GridMeta {
-  columns: Column[];
+  columns: Column[] | any[];
   id: any;
 }
 

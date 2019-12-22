@@ -31,4 +31,14 @@ describe("LoaderComponent", () => {
 
     expect(loaderDiv).toBeTruthy();
   });
+  
+  it("should not display loader", () => {
+    component.loading = false;
+    fixture.detectChanges();
+
+    const divElement: HTMLElement = fixture.nativeElement;
+    const loaderDiv = divElement.querySelector(".spinner-border");
+
+    expect(loaderDiv).toBeFalsy();
+  });
 });

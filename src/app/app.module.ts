@@ -6,11 +6,18 @@ import {
   AppRoutingModule,
   FormsModule,
   NgModule,
-} from './index';
+  CoreModule
+} from "./index";
 
 @NgModule({
-  declarations: [AppComponent, PageNotFoundComponent ],
-  imports: [BrowserModule, DriversModule, AppRoutingModule, FormsModule],
+  declarations: [AppComponent, PageNotFoundComponent],
+  imports: [
+    BrowserModule,
+    CoreModule,
+    DriversModule,
+    AppRoutingModule,
+    FormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

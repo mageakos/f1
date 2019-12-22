@@ -14,7 +14,7 @@ import { MyLib } from "../../classes/myLib";
   templateUrl: "./label.component.html",
   styleUrls: ["./label.component.scss"]
 })
-export class LabelComponent implements OnInit, OnChanges {
+export class LabelComponent {
   @Input() data = "title";
   @Input() label: string;
   @Input() format: string;
@@ -23,11 +23,7 @@ export class LabelComponent implements OnInit, OnChanges {
   @Output() dataUpdated = new EventEmitter();
 
   constructor() {}
-
-  ngOnInit() {}
-
-  ngOnChanges(changes: SimpleChanges): void {}
-
+  
   modelChanged(eventData) {
     this.dataUpdated.emit(eventData.target.value);
   }

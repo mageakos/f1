@@ -40,4 +40,23 @@ describe("LabelComponent", () => {
 
     expect(component.modelChanged).toHaveBeenCalled();
   });
+
+  it("should get givenId", () => {
+    component.id = "myId";
+    fixture.detectChanges();
+
+    const resId = component.getId();
+
+    expect(resId).toEqual(component.id);
+  });
+
+  it("should get givenId", () => {
+    component.id = undefined;
+
+    fixture.detectChanges();
+
+    const resId = component.getId();
+
+    expect(resId).toBeTruthy();
+  });
 });

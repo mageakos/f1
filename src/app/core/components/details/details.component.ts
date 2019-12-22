@@ -5,30 +5,31 @@ import {
   EventEmitter,
   Input,
   SimpleChanges,
-  OnChanges,
-} from '@angular/core';
+  OnChanges
+} from "@angular/core";
+import { MyLib } from "../../classes/myLib";
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  selector: "app-details",
+  templateUrl: "./details.component.html",
+  styleUrls: ["./details.component.scss"]
 })
-export class DetailsComponent implements OnInit, OnChanges {
+export class DetailsComponent implements OnInit {
+  @Input() id: string;
   @Input() actions: any;
   @Input() entityData: any;
-  @Input() mode: any;
+  @Input() mode: string; // View || Edit || Add
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.entityData);
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(this.entityData);
-  }
+  ngOnInit() {}
 
   dataChanged(e) {
     return e;
   }
-}
 
+  getId() {
+    this.id = this.id || MyLib.valid.getId();
+    return this.id;
+  }
+}

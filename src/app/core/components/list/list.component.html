@@ -2,7 +2,7 @@
   <div class="col-12">
     <h1>{{ title | titlecase }}</h1>
     <div *ngIf="filterable">
-      <input class="w-100 mb-2" placeholder="Filter..." ([ngModel])="filteredData"
+      <input id="my-list-filter" class="w-100 mb-2" placeholder="Filter..." ([ngModel])="filteredData"
         (input)="filterChanged($event.target.value)" />
     </div>
     <div *ngIf="actions" class="mb-2">
@@ -18,7 +18,7 @@
               }"></i></span>
         </th>
       </tr>
-      <tr *ngFor="let item of filteredData; let i = index; trackBy: trackFn"
+      <tr [id]="item[id]" class="my-list-row"  *ngFor="let item of filteredData; let i = index; trackBy: trackFn"
         [ngClass]="{ selected: item[id] == selected }" (click)="rowClicked(item)" (dblclick)="rowDbClicked(item)">
         <td *ngFor="let col of columns; let i = index; trackBy: trackFn" [hidden]="col.hidden">
           <span *ngIf="!col.hidden">{{ item[col.name] }}</span>

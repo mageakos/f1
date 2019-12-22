@@ -1,16 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { PageNotFoundComponent } from './page-not-found.component';
+import { PageNotFoundComponent } from "./page-not-found.component";
+import { ButtonGroupComponent } from "../core";
+import { RouterTestingModule } from "@angular/router/testing";
 
-describe('PageNotFoundComponent', () => {
+describe("PageNotFoundComponent", () => {
   let component: PageNotFoundComponent;
   let fixture: ComponentFixture<PageNotFoundComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageNotFoundComponent ]
-    })
-    .compileComponents();
+      declarations: [PageNotFoundComponent, ButtonGroupComponent],
+      imports: [RouterTestingModule]
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +21,17 @@ describe('PageNotFoundComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
+  });
+
+  it("should display message", () => {
+    component.withMessage = "my message";
+    fixture.detectChanges();
+
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector(".my-404-msg").textContent).toContain(
+      component.withMessage
+    );
   });
 });
