@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-12">
+    <f1-list *ngIf="data && data.length > 0" [title]="'Drivers'" [actions]="driverActions" [id]="'driverId'"
+      [data]="data" [sortable]="false" [filterable]="true" [columns]="columns" (rowDbClick)="viewDriver($event)">
+    </f1-list>
+  </div>
+</div>
+
+<f1-loader [loading]="loading"></f1-loader>

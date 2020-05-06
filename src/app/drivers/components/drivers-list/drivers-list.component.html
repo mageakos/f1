@@ -1,9 +1,0 @@
-<div class="row">
-  <div class="col-12">
-    <app-list *ngIf="data && data.length > 0" [title]="'Drivers'" [actions]="driverActions" [id]="'driverId'"
-      [data]="data" [sortable]="false" [filterable]="true" [columns]="columns" (rowDbClick)="viewDriver($event)">
-    </app-list>
-  </div>
-</div>
-
-<app-loader [loading]="loading"></app-loader>

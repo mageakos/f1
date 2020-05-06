@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12">
+    <h1>{{ title | titlecase }}</h1>
+    <div *ngIf="filterable">
+      <input id="my-list-filter" class="w-100 mb-2" placeholder="Filter..." ([ngModel])="filteredData"
+        (input)="filterChanged($event.target.value)" />
+    </div>
+    <div *ngIf="actions" class="mb-2">
+      <f1-button-group [options]="actions"></f1-button-group>
+    </div>
+    <table class="my-table w-100">
+      <tr>
+        <th *ngFor="let col of columns; let i = index; trackBy: trackFn" [hidden]="col.hidden" (click)="sort(col)">
+          {{ col.column | titlecase }}
+          <span><i *ngIf="col.lastSorted" class="fa" [ngClass]="{
+                'fa-angle-up': col.lastSorted === -1,
+                'fa-angle-down': col.lastSorted === 1
+              }"></i></span>
+        </th>
+      </tr>
+      <tr [id]="item[id]" class="my-list-row"  *ngFor="let item of filteredData; let i = index; trackBy: trackFn"
+        [ngClass]="{ selected: item[id] == selected }" (click)="rowClicked(item)" (dblclick)="rowDbClicked(item)">
+        <td *ngFor="let col of columns; let i = index; trackBy: trackFn" [hidden]="col.hidden">
+          <span *ngIf="!col.hidden">{{ item[col.name] }}</span>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

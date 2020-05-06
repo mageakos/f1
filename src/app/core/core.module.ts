@@ -1,33 +1,23 @@
-import {
-  CommonModule,
-  HttpClientModule,
-  FormsModule,
-  ButtonGroupComponent,
-  LabelComponent,
-  ListComponent,
-  DetailsComponent,
-  NgModule,
-  LoaderComponent
-} from './index';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
+import { FooterComponent } from './layout/footer/footer.component';
+import { RequestService } from './services/request/request.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, HttpClientModule],
-  exports: [
-    CommonModule,
+  declarations: [MainLayoutComponent, FooterComponent],
+  imports: [
+    // vendor
+    BrowserModule,
+    BrowserAnimationsModule,
+    RouterModule,
     HttpClientModule,
-    FormsModule,
-    ButtonGroupComponent,
-    LabelComponent,
-    ListComponent,
-    DetailsComponent,
-    LoaderComponent
+
+    // material
   ],
-  declarations: [
-    ButtonGroupComponent,
-    LabelComponent,
-    ListComponent,
-    DetailsComponent,
-    LoaderComponent
-  ]
+  exports: [MainLayoutComponent, FooterComponent],
 })
 export class CoreModule {}

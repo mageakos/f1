@@ -1,0 +1,18 @@
+<div *ngIf="!isLoading && driverDetails">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>{{ driverDetails && driverDetails.givenName }}</h1>
+      <f1-details [entityData]="driverDetails" [mode]="'view'"> </f1-details>
+    </div>
+    <div class="col-sm-8">
+      <f1-list *ngIf="listOptions.isReady && listOptions.data" [title]="listOptions.title"
+        [actions]="listOptions.actions" [id]="listOptions.id" [data]="listOptions.data" [sortable]="true"
+        [filterable]="false" [columns]="listOptions.columns">
+      </f1-list>
+    </div>
+  </div>
+  <div class="row">
+    <f1-button-group class="col-sm-12" [options]="buttonOptions"></f1-button-group>
+  </div>
+</div>
+<f1-loader [loading]="isLoading"></f1-loader>

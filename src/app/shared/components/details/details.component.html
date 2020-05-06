@@ -1,0 +1,23 @@
+<div class="row" *ngIf="entityData">
+  <div class="col-12">
+    <div class="card p-2">
+      <form #entiy="ngForm">
+        <div class="container my-2">
+          <f1-label
+          *ngFor="let item of entityData | keyvalue"
+            [label]="item.key"
+            [(data)]="item.value"
+            [(mode)]="mode"
+            (dataUpdated)="dataChanged($event)"
+            [format]="'title'"
+          ></f1-label>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8 float-right">
+    <f1-button-group *ngIf="actions"></f1-button-group>
+  </div>
+</div>

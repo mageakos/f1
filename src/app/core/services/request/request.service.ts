@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { MRRepsonse } from 'src/app/drivers/classes/models';
+import { MRRepsonse } from 'src/app/features/drivers/classes/models';
 
 @Injectable({
   providedIn: 'root'
