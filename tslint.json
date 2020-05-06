@@ -1,5 +1,5 @@
 {
-  "extends": "tslint:recommended",
+  "extends": ["tslint:recommended", "tslint-config-prettier"],
   "rules": {
     "array-type": false,
     "arrow-parens": false,
@@ -12,13 +12,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "f1",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "f1",
       "kebab-case"
     ],
     "import-blacklist": [
